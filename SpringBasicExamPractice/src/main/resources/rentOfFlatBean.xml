@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" default-init-method="init"
+       default-destroy-method="destroy">
+
+    <bean id="oneFlat" class="org.example.rentOfFlat_xml.RentOfOneBHKFlat">
+        <property name="noOfPerson" value="3"/>
+
+    </bean>
+
+    <bean id="twoFlat" class="org.example.rentOfFlat_xml.RentOfTwoBHKFlat">
+        <property name="noOfPerson" value="2"/>
+
+    </bean>
+
+    <bean id="threeFlat" class="org.example.rentOfFlat_xml.RentOfThreeBHKFlat">
+        <property name="noOfPerson" value="2"/>
+    </bean>
+    <!--    constructor DI for property with three flat beans-->
+    <bean id="property1" class="org.example.rentOfFlat_xml.Property">
+        <constructor-arg value="oneFlat"/>
+        <constructor-arg value="twoFlat"/>
+        <constructor-arg value="threeFlat"/>
+    </bean>
+
+<!--    setter Di for Property with three flat beans-->
+
+    <bean id="property2" class="org.example.rentOfFlat_xml.Property">
+        <property name="rentOfOneBHKFlat" ref="oneFlat"/>
+        <property name="rentOfTwoBHKFlat" ref="twoFlat"/>
+        <property name="rentOfThreeBHKFlat" ref="threeFlat"/>
+    </bean>
+</beans>

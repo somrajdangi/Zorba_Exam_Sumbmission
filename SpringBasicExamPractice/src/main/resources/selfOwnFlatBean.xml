@@ -1,0 +1,29 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-3.0.xsd" default-init-method="init"
+       default-destroy-method="destroy">
+
+    <bean id="selfOwnedOneBHKFlat" class="org.example.selfOwnedFlat.SelfOwnedOneBHKFlat"/>
+    <bean id="selfOwnedTwoBHKFlat" class="org.example.selfOwnedFlat.SelfOwnedTwoBHKFlat"/>
+    <bean id="selfOwnedThreeBHKFlat" class="org.example.selfOwnedFlat.SelfOwnedThreeBHKFlat"/>
+<!--autowire :no-->
+    <bean id="property1" class="org.example.selfOwnedFlat.SelfOwnedFlatProperty" autowire="no">
+        <property name="selfOwnedOneBHKFlat" ref="selfOwnedOneBHKFlat"/>
+        <property name="selfOwnedTwoBHKFlat" ref="selfOwnedTwoBHKFlat"/>
+        <property name="selfOwnedThreeBHKFlat" ref="selfOwnedThreeBHKFlat"/>
+    </bean>
+<!--    autowire :byName-->
+    <bean  id="property2" class="org.example.selfOwnedFlat.SelfOwnedFlatProperty" autowire="byName"/>
+
+<!--autowire:byType-->
+    <bean id="property3" class="org.example.selfOwnedFlat.SelfOwnedFlatProperty" autowire="byType"/>
+
+<!--    autowire by constructor-->
+    <bean id="property4" class="org.example.selfOwnedFlat.SelfOwnedFlatProperty" autowire="constructor">
+        <constructor-arg ref="selfOwnedOneBHKFlat"/>
+        <constructor-arg ref="selfOwnedTwoBHKFlat"/>
+        <constructor-arg ref="selfOwnedThreeBHKFlat"/>
+    </bean>
+
+</beans>
