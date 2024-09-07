@@ -10,6 +10,15 @@
 
 <form action="saveUser" method="post">
 
+<input type="text" name="userName" value    />
+<br>
+<input type="text" name="userEmail" value    />
+<br>
+<input type="text" name="userPassword" value    />
+<br><input type="text" name="userUserName" value    />
+    <br><input type="text" name="userMobile" value    />
+        <br>
+<button>submit</button>
 
 
 </form>

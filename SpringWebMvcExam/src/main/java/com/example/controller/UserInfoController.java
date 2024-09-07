@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.model.UserInfoModel;
 import com.example.service.UserInfoService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -11,14 +12,11 @@ public class UserInfoController {
     UserInfoService userInfoService;
 
     @GetMapping(path="/saveUser")
-    public String saveUser(@ModelAttribute("userInfo")UserInfoModel userInfoModel){
-       userInfoService.saveUserInfo(userInfoModel);
+    public String saveUser(@ModelAttribute UserInfoModel userInfoModel, Model model){
+     String response= userInfoService.saveUserInfo(userInfoModel);
+
+    model.addAttribute("message",response);
        return "success";//jsp
     }
-
-    public String GetAllStudent(Model model)
-List<UserInfoModel>userInfoModelList= this.userInfoService.getAllUserInfo();
-    model.addAttribute("alluserinfo",userInfoModelList );
-    return "userinfoDashboard";
 
 }

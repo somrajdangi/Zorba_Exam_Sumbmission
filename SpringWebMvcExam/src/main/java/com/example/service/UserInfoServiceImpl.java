@@ -1,34 +1,55 @@
 package com.example.service;
 
 import com.example.dao.UserInfoDAO;
+import com.example.entity.UserInfo;
 import com.example.model.UserInfoModel;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
-    UserInfoDAO userInfoDAO;
-
-    public void saveUserInfo(UserInfoModel userinfo) {
-        userInfoDAO.saveUserInfo(userinfo);
-    }
+    private UserInfoDAO userInfoDAO;
 
     public List<UserInfoModel> getAllUserInfo() {
-        List<UserInfoModel> userInfoModelList = userInfoDAO.getAllUserInfo();
-        List<UserInfoModel> userInfoModelList1 = new ArrayList<>();
-        for (UserInfoModel userInfoModel : userInfoModelList) {
-            UserInfoModel userInfoModel1 = new UserInfoModel();
-            userInfoModel1.setUserName(userInfoModel.getUserName());
-            userInfoModel1.setUserEmail(userInfoModel.getUserEmail());
-            userInfoModel1.setUserMobile(userInfoModel.getUserMobile());
-            userInfoModel1.setUserPassword(userInfoModel.getUserPassword());
-            userInfoModel1.setUserUserName(userInfoModel.getUserUserName());
-
+        List<UserInfo> userInfoList = this.userInfoDAO.getAllUserInfo();
+        List<UserInfoModel> userInfoModelList = new ArrayList<>();
+        for (UserInfo userInfo : userInfoList) {
+            UserInfoModel userInfoModel = new UserInfoModel();
+            userInfoModel.setUserName(userInfo.getUserName());
+            userInfoModel.setUserEmail(userInfo.getUserEmail());
+            userInfoModel.setUserMobile(userInfo.getUserMobile());
+            userInfoModel.setUserPassword(userInfo.getUserPassword());
+            userInfoModel.setUserUserName(userInfo.getUserUserName());
+            userInfoModelList.add(userInfoModel);
         }
-        return userInfoModelList1;
+        return userInfoModelList;
     }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public String saveUserInfo(UserInfoModel userInfoModel) {
+        String responseMsg = "";
+
+            if (userInfoModel.getUserName() != null && userInfoModel.getUserEmail() != null && userInfoModel.getUserMobile() != null && userInfoModel.getUserPassword() != null && userInfoModel.getUserUserName() != null) {
+                UserInfo userInfo = new UserInfo();
+                userInfo.setUserName(userInfoModel.getUserName());
+                userInfo.setUserEmail(userInfoModel.getUserEmail());
+                userInfo.setUserMobile(userInfoModel.getUserMobile());
+                userInfo.setUserPassword(userInfoModel.getUserPassword());
+                userInfo.setUserUserName(userInfoModel.getUserUserName());
+            } else {
+                responseMsg = "could not process";
+            }
+
+        return responseMsg;
+    }
+
+
+
 }
 
 

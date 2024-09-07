@@ -5,7 +5,7 @@ import com.example.model.UserInfoModel;
 import java.util.List;
 
 public interface UserInfoService {
-    void saveUserInfo(UserInfoModel userinfo);
+    String saveUserInfo(UserInfoModel userInfoModel);
 
     List<UserInfoModel> getAllUserInfo();
 }
