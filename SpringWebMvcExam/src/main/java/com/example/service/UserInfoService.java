@@ -1,11 +1,14 @@
 package com.example.service;
 
+import com.example.entity.UserInfoEntity;
 import com.example.model.UserInfoModel;
 
 import java.util.List;
 
 public interface UserInfoService {
-    String saveUserInfo(UserInfoModel userInfoModel);
+    public String saveUserInfo(UserInfoModel userInfoModel);
 
-    List<UserInfoModel> getAllUserInfo();
+    List<UserInfoEntity> getAllUserInfo();
+
+    public UserInfoEntity vendorValidation(String name, String password, String role);
 }

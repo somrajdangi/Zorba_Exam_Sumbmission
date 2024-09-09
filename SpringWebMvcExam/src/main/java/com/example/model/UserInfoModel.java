@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class UserInfoModel {
-     Integer userId;
+    Integer userId;
     String userName;
     String userEmail;
     String userMobile;

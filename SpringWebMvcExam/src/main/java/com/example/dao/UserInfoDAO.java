@@ -1,11 +1,15 @@
 package com.example.dao;
 
-import com.example.entity.UserInfo;
-import com.example.model.UserInfoModel;
+import com.example.entity.UserInfoEntity;
 
 import java.util.List;
 
 public interface UserInfoDAO {
-    String saveUserInfo(UserInfo userInfo);
-    List<UserInfo> getAllUserInfo();
+    String saveUserInfo(UserInfoEntity userInfo);
+
+    List<UserInfoEntity> getAllUserInfo();
+
+    public UserInfoEntity getVendorData(String name, String password, String role);
+
+
 }

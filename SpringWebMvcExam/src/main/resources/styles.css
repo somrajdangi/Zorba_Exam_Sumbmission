@@ -1,0 +1,14 @@
+table {
+    border-collapse: collapse; /* Correctly applies border collapse */
+    width: 100%; /* Optional: Full width table */
+}
+
+th, td {
+    border: 1px solid black; /* Border style for table cells */
+    padding: 8px; /* Padding inside cells */
+    text-align: left; /* Text alignment */
+}
+
+th {
+    background-color: #f2f2f2; /* Background color for headers */
+}
