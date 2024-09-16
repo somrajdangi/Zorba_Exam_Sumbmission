@@ -46,7 +46,7 @@
         </beans:property>
     </beans:bean>
 
-    <beans:bean name="studentDAO" class="com.example.dao.UserInfoDAOImpl">
+    <beans:bean name="studentDAO" class="com.example.dao.UserInfoDAO">
         <beans:constructor-arg name="sessionFactory" ref="hibernateSessionFactory"/>
     </beans:bean>
 

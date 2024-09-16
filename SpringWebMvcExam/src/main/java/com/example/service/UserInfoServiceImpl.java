@@ -1,23 +1,28 @@
 package com.example.service;
 
-import com.example.dao.UserInfoDAO;
 import com.example.entity.InventoryCategoryEntity;
 import com.example.entity.InventoryEntity;
 import com.example.entity.UserInfoEntity;
 import com.example.model.Inventory;
 import com.example.model.UserInfoModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.dao.UserInfoDAO;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     private UserInfoDAO userInfoDAO;
-
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String saveUserInfo(UserInfoModel userInfoModel) {
@@ -68,9 +73,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             inventoryEntity.setInventoryQuantity(Integer.parseInt(inventory.getQuantity()));
             inventoryEntity.setInventoryPrice(Float.parseFloat(inventory.getPrice()));
 
-
             userInfoDAO.saveInventoryEntity(inventoryEntity);
-
             inventoryCategoryEntity.setCategoryName(inventory.getName());
             userInfoDAO.saveInventoryCategoryEntity(inventoryCategoryEntity);
 
@@ -78,7 +81,6 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
         return null;
     }
-
 
     public boolean validateEmail(String email) {
         boolean isEmailValid = false;
@@ -110,7 +112,35 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
     }
 
+    public void saveExcelInventory(MultipartFile multipartFile) {
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook(multipartFile.getInputStream());
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIterator = sheet.iterator();
+            rowIterator.next();
+            while (rowIterator.hasNext()) {
+                Row row = rowIterator.next();
+                Iterator<Cell> cellIterator = row.cellIterator();
+                Inventory inventory = new Inventory();
+                InventoryCategoryEntity inventoryCategoryEntity = new InventoryCategoryEntity();
+                Cell idCell = row.getCell(0);
+                Cell nameCell = row.getCell(1);
+                Cell emailCell = row.getCell(2);
 
+            }
+
+        } catch (Exception e) {
+
+        }
+    }
+
+    public UserInfoEntity customerValidation(String name, String password, String role) {
+        return userInfoDAO.getCustomerData(name, password, role);
+    }
+
+    public UserInfoEntity adminValidate(String name, String password, String role) {
+        return userInfoDAO.getAdminData(name, password, role);
+    }
 }
 
 

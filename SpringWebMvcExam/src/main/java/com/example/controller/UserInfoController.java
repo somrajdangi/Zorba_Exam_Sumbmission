@@ -3,24 +3,25 @@ package com.example.controller;
 import com.example.entity.UserInfoEntity;
 import com.example.model.Inventory;
 import com.example.model.UserInfoModel;
-import com.example.service.UserInfoService;
+import com.example.service.UserInfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Controller
 public class UserInfoController {
     @Autowired
-    UserInfoService userInfoService;
+    UserInfoServiceImpl userInfoServiceImpl;
 
-    @GetMapping(path = "/saveUser")
+    @GetMapping(path = "/saveUserInfo")
     public String saveUser(@ModelAttribute(name = "userInfoModel") UserInfoModel userInfoModel, Model model) {
         String message = "";
         if (userInfoModel != null) {
-            message = userInfoService.saveUserInfo(userInfoModel);
+            message = userInfoServiceImpl.saveUserInfo(userInfoModel);
             System.out.println("data saved!");
 
         }
@@ -28,12 +29,21 @@ public class UserInfoController {
         return "saveUserView";
     }
 
-    @GetMapping(path = "/getAllUser")
+    @GetMapping(path = "/getAllUserInfo")
     public String getAllUser(Model model) {
-        List<UserInfoEntity> userInfoEntityList = userInfoService.getAllUserInfo();
+        List<UserInfoEntity> userInfoEntityList = userInfoServiceImpl.getAllUserInfo();
         System.out.println(userInfoEntityList.get(0));
         model.addAttribute("userList", userInfoEntityList);
         return "viewUser";
+    }
+
+
+    @RequestMapping("/getRollerId")
+    public String getRollerId(@RequestParam("userId") String userId, Model model) {
+
+        model.addAttribute("userId", userId);
+        return "addRoles";
+
     }
 
     @RequestMapping(value = "/addRoles", method = RequestMethod.POST)
@@ -50,12 +60,9 @@ public class UserInfoController {
         return "success";
     }
 
-    @RequestMapping("/getRollerId")
-    public String getRollerId(@RequestParam("userId") String userId, Model model) {
-
-        model.addAttribute("userId", userId);
-        return "addRoles";
-
+    @GetMapping("/excelRead")
+    public void readExcel(@RequestParam MultipartFile multipartFile) {
+        userInfoServiceImpl.saveExcelInventory(multipartFile);
     }
 
     //exam section
@@ -64,17 +71,51 @@ public class UserInfoController {
                                    @RequestParam("password") String password,
                                    @RequestParam("role") String role,
                                    Model model) {
-        UserInfoEntity user = userInfoService.vendorValidation(name, password, role);
+        UserInfoEntity user = userInfoServiceImpl.vendorValidation(name, password, role);
         if (user == null) {
-            return "invalidVendorInputs";
+            model.addAttribute("user", user.getUserUserName());
+            return "invalidInputs";
         }
         return "addInventory";
     }
 
     @RequestMapping(value = "/addInventory")
-    public String addInventory(@ModelAttribute("inventory") Inventory inventory) {
-        String message = userInfoService.saveInventory(inventory);
-        return null;
+    public void addInventory(@ModelAttribute("inventory") Inventory inventory) {
+        userInfoServiceImpl.saveInventory(inventory);
+
+
     }
 
+
+    @RequestMapping(value = "/customerController")
+    public String customerController(@RequestParam("name") String name,
+                                     @RequestParam("password") String password,
+                                     @RequestParam("role") String role,
+                                     Model model) {
+        UserInfoEntity user = userInfoServiceImpl.customerValidation(name, password, role);
+        if (user == null) {
+            model.addAttribute("user", user.getUserUserName());
+            return "invalidInputs";
+        } else {
+            return "addInventory";
+        }
+
+    }
+
+
+    @RequestMapping(value = "/adminController")
+    public String adminController(@RequestParam("name") String name,
+                                  @RequestParam("password") String password,
+                                  @RequestParam("role") String role,
+                                  Model model) {
+        UserInfoEntity user = userInfoServiceImpl.adminValidate(name, password, role);
+       UserInfoEntity customer= userInfoServiceImpl.getAllUserInfo()
+        if (user == null) {
+            model.addAttribute("user", user.getUserUserName());
+            return "invalidInputs";
+
+        } else {
+            return "addInventory";
+        }
+    }
 }

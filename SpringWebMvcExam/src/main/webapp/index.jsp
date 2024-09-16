@@ -1,5 +1,6 @@
 
-<form action="saveUser" method="get">
+<h1>register user information form<h1/>
+<form action="saveUserInfo" method="get">
 
 <input type="text" name="userName" value ="" placeholder="name"  />
 <br>

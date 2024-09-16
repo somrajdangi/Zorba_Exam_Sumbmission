@@ -24,5 +24,5 @@ image: <input type="file" name="image" value=""/>
 
 inventory description: <textarea  name="description" value=""/>
 <br>
-<input type="submit" value="submit"/>
+<input type="submit" value="add"/>
 </form>
