@@ -1,19 +1,22 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java"
+isELIgnored="false" %>
 
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<h1>
+  pick the roles from drop down menu
+  <h1>
+    <form
+      action="http://localhost:8080/SpringWebMvcExam/addRoles"
+      method="post"
+    >
+      <select name="role">
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+        <option value="vendor">Vendor</option>
+      </select>
 
-<h1> pick the roles from drop down menu<h1>
+      <input type="hidden" name="userId" value="${userId}" />
 
-
-
-<form action="http://localhost:8080/SpringWebMvcExam/addRoles" method="post">
-<select name="role">
-  <option  value="admin">Admin</option>
-  <option  value="user">User</option>
-  <option value="vendor">Vendor</option>
-</select>
-
-<input type="hidden" name="userId" value="${userId}"/>
-
-<input  type="submit" value="submit" />
-
-</form>
+      <input type="submit" value="submit" />
+    </form>
+  </h1>
+</h1>

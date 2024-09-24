@@ -16,7 +16,7 @@ import java.util.List;
 public class UserInfoDAO {
     private SessionFactory sessionFactory;
 
-    //constructor di
+    // constructor di
     public UserInfoDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -24,7 +24,7 @@ public class UserInfoDAO {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public String saveUserInfo(UserInfoEntity userInfoEntity) {
         String response = "";
-        Session session = sessionFactory.getCurrentSession();//if error, use openSession()
+        Session session = sessionFactory.getCurrentSession();// if error, use openSession()
 
         try {
             session.persist(userInfoEntity);
@@ -56,21 +56,20 @@ public class UserInfoDAO {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public UserInfoEntity findById(Integer id) {
 
-
         return null;
     }
 
     public void saveUserRole(String userId, String role) {
         Session session = sessionFactory.getCurrentSession();
         try {
-            //save role into db
+            // save role into db
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    //exam section
+    // exam section
     public UserInfoEntity getVendorData(String name, String password, String role) {
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
@@ -98,7 +97,7 @@ public class UserInfoDAO {
     public String saveInventoryCategoryEntity(InventoryCategoryEntity inventoryCategoryEntity) {
 
         String response = "";
-        Session session = sessionFactory.getCurrentSession();//if error, use openSession()
+        Session session = sessionFactory.getCurrentSession();// if error, use openSession()
 
         try {
             session.persist(inventoryCategoryEntity);
@@ -117,7 +116,7 @@ public class UserInfoDAO {
     public String saveInventoryEntity(InventoryEntity inventoryEntity) {
 
         String response = "";
-        Session session = sessionFactory.getCurrentSession();//if error, use openSession()
+        Session session = sessionFactory.getCurrentSession();// if error, use openSession()
 
         try {
             session.persist(inventoryEntity);
@@ -166,12 +165,12 @@ public class UserInfoDAO {
     }
 
     public UserInfoEntity getAllUserWithRoleVendor(String role) {
-        //fetch all vendor data where role is role;
+        // fetch all vendor data where role is role;
         return getAllUserWithRole(role);
     }
 
     public UserInfoEntity getAllUserWithRoleCustomer(String role) {
-        //fetch all customer  where role is role
+        // fetch all customer where role is role
         return getAllUserWithRole(role);
 
     }
@@ -197,6 +196,4 @@ public class UserInfoDAO {
         return user;
     }
 
-
 }
-
